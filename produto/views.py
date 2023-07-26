@@ -77,7 +77,7 @@ def add_carrinho(request):
 
     for i, j in adicionais:
         for k in j:
-            preco_total += Opcoes.objects.filter(id=int(k))[0].acrecimo
+            preco_total += Opcoes.objects.filter(id=int(k))[0].acrescimo
 
     def troca_id_por_nome_adicional(adicional):
         adicionais_com_nome = []
@@ -106,10 +106,10 @@ def add_carrinho(request):
 
 def ver_carrinho(request):
     categorias = Categoria.objects.all()
-    dados_motrar = []
+    dados_mostrar = []
     for i in request.session['carrinho']:
         prod = Produto.objects.filter(id=i['id_produto'])
-        dados_motrar.append(
+        dados_mostrar.append(
             {'imagem': prod[0].img.url,
              'nome': prod[0].nome_produto,
              'quantidade': i['quantidade'],
@@ -119,7 +119,7 @@ def ver_carrinho(request):
         )
     total = sum([float(i['preco']) for i in request.session['carrinho']])
 
-    context = {'dados': dados_motrar, 'total': total, 'carrinho': len(request.session['carrinho']), 'categorias': categorias, }
+    context = {'dados': dados_mostrar, 'total': total, 'carrinho': len(request.session['carrinho']), 'categorias': categorias, }
 
     return render(request, 'carrinho.html', context)
 
